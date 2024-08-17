@@ -16,18 +16,10 @@
     supportedSystems = ["x86_64-linux"];
     # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-    # forAllSystems = { x86_64-linux = "x86_64-linux";};
-    # Nixpkgs instantiated for supported system types.
-    # But forAllSystems is an attribute set, not a function?
     nixpkgsFor = forAllSystems (
-      # function that takes in 1 argument called "system"
       system:
-        # Imports nixpkgs with some overrides?
         import nixpkgs {
           inherit system;
-          # Here we're providing the Rust toolchain overlay thing, pretty standard.
-          # But we're supposed to mode it to before this import of nixpkgs?
-          # Or the other option is to apply overlays over the "package"?
           overlays = [ rust-overlay.overlays.default self.overlays.default ];
         }
     );
