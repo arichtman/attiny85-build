@@ -1,0 +1,21 @@
+[package]
+name = "attiny85-build"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev]
+panic = "abort"
+lto = true
+opt-level = "s"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+debug = true
+lto = true
+opt-level = "s"
+
+[dependencies]
+attiny-hal = { git = "https://github.com/rahix/avr-hal", features = ["attiny85"] }
+embedded-hal = "0.2.7"
+panic-halt = "0.2.0"
